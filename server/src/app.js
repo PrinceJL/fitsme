@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { env } from './config/env.js';
 import authRoutes from './routes/authRoutes.js';
 import healthRoutes from './routes/healthRoutes.js';
+import measurementRoutes from './routes/measurementRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 
 export function createApp() {
@@ -17,9 +18,9 @@ export function createApp() {
 
   app.use('/api/health', healthRoutes);
   app.use('/api/auth', authRoutes);
+  app.use('/api/measurements', measurementRoutes);
 
   // Future phases will mount:
-  // app.use('/api/measurements', measurementRoutes);
   // app.use('/api/catalog', catalogRoutes);
   // app.use('/api/recommendations', recommendationRoutes);
 

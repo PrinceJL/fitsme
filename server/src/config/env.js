@@ -19,6 +19,7 @@ export const env = {
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
   uploadDir: process.env.UPLOAD_DIR || './uploads',
   maxUploadSizeMb: Number(process.env.MAX_UPLOAD_SIZE_MB) || 10,
+  cvServiceUrl: process.env.CV_SERVICE_URL || 'http://localhost:8001',
 };
 
 export const isProd = env.nodeEnv === 'production';

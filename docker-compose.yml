@@ -26,11 +26,14 @@ services:
       - ./server/.env
     environment:
       DATABASE_URL: postgresql://fitsme:fitsme_password@postgres:5432/fitsme
+      CV_SERVICE_URL: http://cv:8001
+    command: sh -c "npm run migrate && npm run dev"
     ports:
       - '4000:4000'
     volumes:
       - ./server:/app
-      - /app/node_modules
+      - ./database:/database
+      - server_node_modules:/app/node_modules
       - ./uploads:/app/uploads
     depends_on:
       postgres:
@@ -40,13 +43,31 @@ services:
     build: ./client
     container_name: fitsme-client
     restart: unless-stopped
+    environment:
+      PROXY_TARGET: "http://server:4000"
     ports:
       - '5173:5173'
     volumes:
       - ./client:/app
-      - /app/node_modules
+      - client_node_modules:/app/node_modules
     depends_on:
       - server
 
+  cv:
+    build: ./ai/computer-vision
+    container_name: fitsme-cv
+    restart: unless-stopped
+    ports:
+      - '8001:8001'
+    volumes:
+      - ./ai/computer-vision:/app
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:8001/health || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   fitsme_pg_data:
+  server_node_modules:
+  client_node_modules:

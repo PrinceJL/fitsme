@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import MeasurementsPage from './pages/MeasurementsPage';
 
 export default function App() {
   return (
@@ -17,6 +18,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/measurements"
+          element={
+            <ProtectedRoute>
+              <MeasurementsPage />
             </ProtectedRoute>
           }
         />

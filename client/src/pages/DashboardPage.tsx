@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 export default function DashboardPage() {
@@ -17,9 +18,14 @@ export default function DashboardPage() {
           Welcome{user?.full_name ? `, ${user.full_name}` : ''} 👋
         </h2>
         <p className="mt-2 text-gray-500">
-          Phase 1 complete: authentication is wired end-to-end. Photo upload and body
-          measurement estimation land in Phase 2.
+          Upload a couple of photos and we'll estimate your body measurements.
         </p>
+        <Link
+          to="/measurements"
+          className="mt-4 inline-block rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700"
+        >
+          Get my measurements
+        </Link>
       </main>
     </div>
   );

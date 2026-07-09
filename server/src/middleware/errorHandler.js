@@ -1,3 +1,4 @@
+import multer from 'multer';
 import { ApiError } from '../utils/ApiError.js';
 import { isProd } from '../config/env.js';
 
@@ -12,6 +13,10 @@ export function errorHandler(err, req, res, next) {
       error: err.message,
       details: err.details,
     });
+  }
+
+  if (err instanceof multer.MulterError || /Only JPEG, PNG, or WEBP/.test(err.message || '')) {
+    return res.status(400).json({ error: err.message });
   }
 
   console.error('Unhandled error:', err);

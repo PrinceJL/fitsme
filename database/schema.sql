@@ -14,3 +14,25 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
+
+-- Measurements table (Phase 2)
+CREATE TABLE IF NOT EXISTS measurements (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    height_cm NUMERIC,
+    front_image_path TEXT,
+    side_image_path TEXT,
+    shoulder_width_cm NUMERIC,
+    chest_cm NUMERIC,
+    waist_cm NUMERIC,
+    hip_cm NUMERIC,
+    arm_length_cm NUMERIC,
+    leg_length_cm NUMERIC,
+    body_shape VARCHAR(64),
+    confidence_score NUMERIC,
+    raw_landmarks JSONB,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_measurements_user ON measurements (user_id);
